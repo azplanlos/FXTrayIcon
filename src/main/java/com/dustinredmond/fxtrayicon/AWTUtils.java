@@ -46,7 +46,10 @@ class AWTUtils {
             checkboxMenuItem.setState(((CheckMenuItem) fxItem).isSelected());
             if (fxItem.getOnAction() != null) {
                 checkboxMenuItem.addItemListener(e -> Platform
-                        .runLater(() -> fxItem.getOnAction().handle(new ActionEvent())));
+                        .runLater(() -> {
+                            ((CheckMenuItem) fxItem).setSelected(checkboxMenuItem.getState());
+                            fxItem.getOnAction().handle(new ActionEvent(fxItem, null));
+                        }));
             }
             awtItem = checkboxMenuItem;
         } else {
